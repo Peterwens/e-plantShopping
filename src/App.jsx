@@ -1,45 +1,47 @@
-
 import React, { useState } from 'react';
+import { Provider } from 'react-redux'; // Import Provider from react-redux
 import ProductList from './ProductList';
-import './App.css';
 import AboutUs from './AboutUs';
+import store from './store'; // Import the configured store
+import './App.css';
 
 function App() {
-  
-  const [showProductList, setShowProductList] = useState(false);
+  const [showProductList, setShowProductList] = useState(false); // State to control the visibility of the product list
 
+  // Handle click on "Get Started" button
   const handleGetStartedClick = () => {
-    setShowProductList(true);
+    setShowProductList(true); // Show the product list
   };
 
   return (
-    <div className="app-container">
-      <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
-        <div className="background-image"></div>
-        <div className="content">
-         <div className="landing_content">
-         <h1>Welcome To Paradise Nursery</h1>
-          <div className="divider"></div>
-          <p>Where Green Meets Serenity</p>
-         
-          <button className="get-started-button" onClick={handleGetStartedClick}>
-            Get Started
-          </button>
-         </div>
-          <div className="aboutus_container">
-          <AboutUs/>
+    // Wrap the application with Provider and pass the store to make Redux store available to all components
+    <Provider store={store}>
+      <div className="app-container">
+        {/* Landing page section */}
+        <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
+          <div className="background-image"></div>
+          <div className="content">
+            <div className="landing_content">
+              <h1>Welcome To Paradise Nursery</h1>
+              <div className="divider"></div>
+              <p>Where Green Meets Serenity</p>
+              <button className="get-started-button" onClick={handleGetStartedClick}>
+                Get Started
+              </button>
+            </div>
+            <div className="aboutus_container">
+              <AboutUs />
+            </div>
           </div>
-          </div>
+        </div>
 
+        {/* Product list section */}
+        <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
+          <ProductList />
+        </div>
       </div>
-      <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
-        <ProductList />
-      </div>
-    </div>
+    </Provider>
   );
 }
 
 export default App;
-
-
-
